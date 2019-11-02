@@ -3,18 +3,15 @@ import Question from './Question'
 import '../../CircularProgressBar.css'
 import CircularProgressBar from '../../CircularProgressBar.js'
 import { connect } from 'react-redux'
-import {assessmentFinished} from './assessmentSlice'
+import { assessmentFinished } from './assessmentSlice'
+import Container from 'react-bulma-components/lib/components/container'
 
-
-
- function Questions({questions, dispatch}) {
+function Questions({ questions, defaultDelay, dispatch }) {
   const [current, setCurrent] = useState(1)
   const [start, setStart] = useState(Date.now())
   const [elapsed, setElapsed] = useState(0)
-  const delay = questions[current-1].delay
-  console.log(questions)
-  console.log(questions[0])
- 
+  const delay = defaultDelay ? defaultDelay * 1000: questions[current - 1].delay*1000
+  
 
   function changeQuestion() {
     if (current === questions.length) {
@@ -29,18 +26,20 @@ import {assessmentFinished} from './assessmentSlice'
   function countDown() {
     setElapsed(Date.now() - start)
   }
-  console.log(delay)
+
   useInterval(changeQuestion, delay)
   useInterval(countDown, 10)
   const value = ((delay - elapsed) * 100) / delay
 
   return (
     <div className="App">
-      <header className="App-header">
+    
         {current}
-        <Question text={questions[current - 1].text} />
+        <Container>
+          <Question text={questions[current - 1].text} />
+        </Container>
         <CircularProgressBar strokeWidth="20" sqSize="150" percentage={value} />
-      </header>
+    
     </div>
   )
 }

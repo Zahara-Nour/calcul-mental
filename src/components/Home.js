@@ -1,35 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { logout } from '../features/auth/authSlice'
-import Assessment from '../features/questions/Assessment'
-import max from '../assets/img/max.svg'
-// import 'react-bulma-components/dist/react-bulma-components.min.css'
-import Button from 'react-bulma-components/lib/components/button'
-import Box from 'react-bulma-components/lib/components/box'
-import List from 'react-bulma-components/lib/components/list'
-function Home({ dispatch, isLoggingOut, logoutError }) {
-  const handleLogout = () => {
-    dispatch(logout())
-  }
 
+
+
+// import 'react-bulma-components/dist/react-bulma-components.min.css'
+import Section from 'react-bulma-components/lib/components/section'
+import Heading from 'react-bulma-components/lib/components/heading'
+import Container from 'react-bulma-components/lib/components/container'
+
+
+function Home({ dispatch, isLoggingOut, logoutError }) {
   
+
   return (
-    <div>
-      <Button onClick={handleLogout} color="primary">
-        Logoutn
-      </Button>
-      <Box>
-      <List hoverable>
-        <List.Item is-primary><Box>121</Box></List.Item>
-        <List.Item active>1</List.Item>
-        <List.Item>1</List.Item>
-        <List.Item>1</List.Item>
-      </List>
-    </Box>
-      {/* <button onClick={handleLogout}>Logout</button> */}
-      <Assessment />
-      <img style={{ width: '50%' }} src={max} alt="Max" />;
-    </div>
+     <Section>
+        <Container>
+          <Heading>Bienvenue</Heading>
+          <Heading subtitle>
+            sur le site de <strong>M. Le Jolly</strong>.
+          </Heading>
+          <Heading subtitle>
+            Certaines ressources sont ouvertes à tous, mais d'autres sont réservées à mes élèves.
+          </Heading>
+        </Container>
+      </Section>
   )
 }
 
