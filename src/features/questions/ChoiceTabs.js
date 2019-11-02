@@ -3,11 +3,20 @@ import Tabs from 'react-bulma-components/lib/components/tabs'
 import List from 'react-bulma-components/lib/components/list'
 import { setCategory, fetchQuestions } from './assessmentSlice'
 import { connect } from 'react-redux'
+
+
 function ChoiceTabs({ categories, dispatch }) {
   const [categoryId, setCategoryId] = useState(0)
   const [subcategoryId, setSubcategoryId] = useState(0)
 
-  function changeTab(id) {}
+  dispatch(
+    setCategory({
+      category: categories[0].label,
+      subcategory: categories[0].subcategories[0],
+    }),
+  )
+  
+  
   let i = 0
   let j = 0
   return (

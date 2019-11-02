@@ -5,6 +5,8 @@ import CircularProgressBar from '../../CircularProgressBar.js'
 import { connect } from 'react-redux'
 import { assessmentFinished } from './assessmentSlice'
 import Container from 'react-bulma-components/lib/components/container'
+import Section from 'react-bulma-components/lib/components/section'
+import QuestionNumber from './QuestionNumber'
 
 function Questions({ questions, defaultDelay, dispatch }) {
   const [current, setCurrent] = useState(1)
@@ -32,15 +34,15 @@ function Questions({ questions, defaultDelay, dispatch }) {
   const value = ((delay - elapsed) * 100) / delay
 
   return (
-    <div className="App">
-    
-        {current}
+  
+      <Section>
+        <QuestionNumber number={current} />
         <Container>
           <Question text={questions[current - 1].text} />
         </Container>
-        <CircularProgressBar strokeWidth="20" sqSize="150" percentage={value} />
+        <CircularProgressBar style={{bottom:10}} strokeWidth="20" sqSize="150" percentage={value} />
+      </Section>
     
-    </div>
   )
 }
 
