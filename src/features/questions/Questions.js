@@ -33,6 +33,8 @@ function Questions({ questions, defaultDelay, dispatch }) {
   useInterval(countDown, 10)
   const value = ((delay - elapsed) * 100) / delay
 
+
+
   return (
   
       <Section>
