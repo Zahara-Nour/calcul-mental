@@ -11,9 +11,12 @@ function preparedQuestions(state) {
     }
   }
   return questions.map(question => {
-    const { text, ...rest } = question
+    const { levels, ...rest } = question
+    const a = levels[0].text
+    const e = math(a)
+    const f = e.generate().string
     return {
-      text: math(text).generate().string,
+      text: math(levels[state.level-1].text).generate().string,
       ...rest,
     }
   })
@@ -58,6 +61,7 @@ const assessmentSlice = createSlice({
     setCategory(state, action) {
       state.category = action.payload.category
       state.subcategory = action.payload.subcategory
+      state.fetched = false
     },
 
     setLevel(state,action) {

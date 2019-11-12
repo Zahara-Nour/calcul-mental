@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Tabs from 'react-bulma-components/lib/components/tabs'
 import List from 'react-bulma-components/lib/components/list'
 import { setCategory, fetchQuestions } from './assessmentSlice'
@@ -9,12 +9,17 @@ function ChoiceTabs({ categories, dispatch }) {
   const [categoryId, setCategoryId] = useState(0)
   const [subcategoryId, setSubcategoryId] = useState(0)
 
-  dispatch(
-    setCategory({
-      category: categories[0].label,
-      subcategory: categories[0].subcategories[0],
-    }),
-  )
+  useEffect(() => {
+    dispatch(
+      setCategory({
+        category: categories[0].label,
+        subcategory: categories[0].subcategories[0],
+      }),
+    )
+     
+  },[]);
+
+  
   
   
   let i = 0
