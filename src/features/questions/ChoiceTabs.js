@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import Tabs from 'react-bulma-components/lib/components/tabs'
-import List from 'react-bulma-components/lib/components/list'
-import { setCategory, fetchQuestions } from './assessmentSlice'
+import { setCategory } from './assessmentSlice'
 import { connect } from 'react-redux'
+import Menu from 'react-bulma-components/lib/components/menu'
+import categories from '../../assets/categories'
+import Params from './Params'
+import Columns from 'react-bulma-components/lib/components/columns'
 
-
-function ChoiceTabs({ categories, dispatch }) {
+function ChoiceTabs({ dispatch }) {
   const [categoryId, setCategoryId] = useState(0)
   const [subcategoryId, setSubcategoryId] = useState(0)
+  const [subsubcategoryId, setSubsubcategoryId] = useState(0)
 
   useEffect(() => {
     dispatch(
       setCategory({
         category: categories[0].label,
-        subcategory: categories[0].subcategories[0],
+        subcategory: categories[0].subcategories[0].label,
+        subsubcategory:
+          categories[0].subcategories[0].subsubcategories[0].label,
       }),
     )
-     
-  },[]);
+  }, [])
 
-  
-  
-  
   let i = 0
   let j = 0
+  let k = 0
   return (
     <>
       <Tabs>
@@ -42,29 +44,63 @@ function ChoiceTabs({ categories, dispatch }) {
           )
         })}
       </Tabs>
-
-      <List>
-        {categories[categoryId].subcategories.map(subcategory => {
-          const id = j++
-          return (
-            <List.Item
-              key={'subcategory' + id}
-              active={subcategoryId === id}
-              onClick={() => {
-                setSubcategoryId(id)
-                dispatch(
-                  setCategory({
-                    category: categories[categoryId].label,
-                    subcategory: subcategory,
-                  }),
-                )
-              }}
-            >
-              {subcategory}
-            </List.Item>
-          )
-        })}
-      </List>
+      <Columns>
+      <Columns.Column size={8}>
+        
+      <Menu>
+        <Menu.List>
+          {categories[categoryId].subcategories.map(subcategory => {
+            const subId = j++
+            return (
+              <Menu.List.Item
+                key={'subcategory' + subId}
+                active={subcategoryId === subId}
+                onClick={() => {
+                  setSubcategoryId(subId)
+                }}
+              >
+                <Menu.List title={subcategory.label}>
+                  {subcategory.subsubcategories.map(subsubcategory => {
+                    const subsubId = k++
+                    return (
+                      <Menu.List.Item
+                        hidden={subcategoryId !== subId}
+                        key={'subsubcategory' + subsubId}
+                        active={subsubcategoryId === subsubId}
+                        onClick={() => {
+                          setSubsubcategoryId(subsubId)
+                          dispatch(
+                            setCategory({
+                              category: categories[categoryId].label,
+                              subcategory: subcategory.label,
+                              subsubcategory: subsubcategory.label,
+                            }),
+                          )
+                        }}
+                      >
+                        {subsubcategory.label}
+                      </Menu.List.Item>
+                    )
+                  })}
+                </Menu.List>
+              </Menu.List.Item>
+            )
+          })}
+        </Menu.List>
+      </Menu>
+    
+      </Columns.Column>
+      <Columns.Column size={4}>
+     
+          
+            <Params />
+         
+     
+      </Columns.Column>
+    </Columns>
+      
+      
+    
     </>
   )
 }

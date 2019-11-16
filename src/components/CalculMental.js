@@ -5,9 +5,10 @@ import Columns from 'react-bulma-components/lib/components/columns'
 import Box from 'react-bulma-components/lib/components/box'
 import Section from 'react-bulma-components/lib/components/section'
 import ChoiceTabs from '../features/questions/ChoiceTabs'
-import Params from '../features/questions/Params'
-import { fetchCategories } from '../features/questions/assessmentSlice'
-import Loader from 'react-bulma-components/lib/components/loader'
+import questions from '../assets/questions'
+import Basket from '../features/questions/Basket'
+console.log('quesions')
+console.log(questions)
 
 function mapStateToProps(state) {
   return {
@@ -24,14 +25,12 @@ function CalcuMental({
   dispatch,
 }) {
   if (!assessmentSelected && categories.length === 0 && !isFetchingCategories) {
-    dispatch(fetchCategories())
+    // dispatch(fetchCategories())
   }
   
 
   return assessmentSelected ? (
     <Assessment />
-  ) : categories.length === 0 ? (
-    <Loader />
   ) : (
     <Columns>
       <Columns.Column size={8}>
@@ -42,7 +41,7 @@ function CalcuMental({
       <Columns.Column size={4}>
         <Section>
           <Box>
-            <Params />
+            <Basket />
           </Box>
         </Section>
       </Columns.Column>

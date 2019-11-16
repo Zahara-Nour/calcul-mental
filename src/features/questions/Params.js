@@ -15,50 +15,35 @@ import {
 } from '../questions/assessmentSlice'
 import Loader from 'react-bulma-components/lib/components/loader'
 import Content from 'react-bulma-components/lib/components/content'
+import questions from '../../assets/questions'
 
 function mapStateToProps(state) {
   return {
-    isFetchingQuestions: state.assessment.fetching,
     category: state.assessment.category,
     subcategory: state.assessment.subcategory,
-    questionsFetched: state.assessment.fetched,
+    subsubcategory: state.assessment.subsubcategory,
     level: state.assessment.level,
-    questions: state.assessment.questions,
   }
 }
 
-function Params({
-  questionsFetched,
-  questions,
-  category,
-  subcategory,
-  isFetchingQuestions,
-  level,
-  dispatch,
-}) {
+function Params({ category, subcategory, subsubcategory, level, dispatch }) {
   const [nbQuestions, setNbQuestions] = useState(1)
   const [delay, setDelay] = useState(1)
   const [levelId, setLevelId] = useState(0)
-  let levels
 
-  if (!questionsFetched && !isFetchingQuestions) {
-    dispatch(
-      fetchQuestions({
-        type: 'mono',
-        params: {
-          category: category,
-          subcategory: subcategory,
-        },
-      }),
-    )
-  } else if (questionsFetched) {
-    levels = questions[0].levels
-    // dispatch(prepareQuestions())
-  }
+  const question = questions.filter(
+    question =>
+      question.category === category &&
+      question.subcategory === subcategory &&
+      question.subsubcategory === subsubcategory,
+  )[0]
+
+  // dispatch(prepareQuestions())
 
   let i = 0
 
-  return (
+  return question ? (
+
     <>
       <Field>
         <Label>Nombre de questions</Label>
@@ -86,38 +71,32 @@ function Params({
         </Control>
       </Field>
 
-      {isFetchingQuestions ? (
-        <Loader />
-      ) : questionsFetched ? (
-        <>
-          <Label>Niveau</Label>
-          <Field kind="group">
-            {levels.map(level => {
-              const id = i++
-              return (
-                <Control key={'button' + id}>
-                  <Button
-                    color={levelId === id ? 'primary' : ''}
-                    onClick={() => {
-                      setLevelId(id)
-                      dispatch(setLevel({ level: id + 1 }))
-                    }}
-                  >
-                    {id + 1}
-                  </Button>
-                </Control>
-              )
-            })}
-          </Field>
-          <Content>
-            <div
-              dangerouslySetInnerHTML={{ __html: levels[levelId].description }}
-            />
-          </Content>
-        </>
-      ) : (
-        <div />
-      )}
+      <>
+        <Label>Niveau</Label>
+        <Field kind="group">
+          {question.levels.map(level => {
+            const id = i++
+            return (
+              <Control key={'button' + id}>
+                <Button
+                  color={levelId === id ? 'primary' : ''}
+                  onClick={() => {
+                    setLevelId(id)
+                    dispatch(setLevel({ level: id + 1 }))
+                  }}
+                >
+                  {id + 1}
+                </Button>
+              </Control>
+            )
+          })}
+        </Field>
+        <Content>
+          <div
+            dangerouslySetInnerHTML={{ __html: question.levels[levelId].description }}
+          />
+        </Content>
+      </>
 
       <Field>
         <Control>
@@ -139,6 +118,8 @@ function Params({
         </Control>
       </Field>
     </>
+  ) : (
+    <div/>
   )
 }
 

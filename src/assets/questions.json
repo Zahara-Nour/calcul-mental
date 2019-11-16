@@ -1,0 +1,79 @@
+[
+    {
+        "category":"Entiers",
+        "subcategory":"Addition",
+        "subsubcategory": "Résultat",
+        "levels":[
+            {
+                "level":1,
+                "description":"Nombres à 1 chiffre",
+                "title":"",
+                "text":"$e{1;1}+${1;1}",
+                "correction":"value",
+                "answer":"decimal",
+                "defaultDelay": 1,
+                "point":1
+            },
+            {
+                "level":2,
+                "description":"Nombres à 2 chiffres",
+                "title":"",
+                "text":"$e{2;2}+${2;2}",
+                "correction":"value",
+                "answer":"decimal",
+                "defaultDelay": 1,
+                "point":1
+            },
+            {
+                "level":3,
+                "description":"Nombres à 3 chiffres",
+                "title":"",
+                "text":"$e{3;3}+${3;3}",
+                "correction":"value",
+                "answer":"decimal",
+                "defaultDelay": 1,
+                "point":1
+            }
+        ]
+
+    },
+
+    {
+        "category":"Entiers",
+        "subcategory":"Addition",
+        "subsubcategory": "A trou",
+        "levels":[
+            {
+                "level":1,
+                "description":"Nombres à 1 chiffre",
+                "title":"",
+                "text":"$e{1;1}+${1;1}",
+                "correction":"value",
+                "answer":"decimal",
+                "defaultDelay": 1,
+                "point":1
+            },
+            {
+                "level":2,
+                "description":"Nombres à 2 chiffres",
+                "title":"",
+                "text":"$e{2;2}+${2;2}",
+                "correction":"value",
+                "answer":"decimal",
+                "defaultDelay": 1,
+                "point":1
+            },
+            {
+                "level":3,
+                "description":"Nombres à 3 chiffres",
+                "title":"",
+                "text":"$e{3;3}+${3;3}",
+                "correction":"value",
+                "answer":"decimal",
+                "defaultDelay": 1,
+                "point":1
+            }
+        ]
+
+    }
+]

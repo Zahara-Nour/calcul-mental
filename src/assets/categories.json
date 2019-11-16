@@ -1,0 +1,115 @@
+[
+  {
+    "label": "Entiers",
+    "subcategories": [
+      {
+        "label": "Addition",
+        "subsubcategories": [
+          {
+            "label": "Résultat"
+          },
+          {
+            "label": "A trou"
+          }
+        ]
+      },
+      {
+        "label": "Soustraction",
+        "subsubcategories": [
+          {
+            "label": "Résultat"
+          },
+          {
+            "label": "A trou"
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "label": "Décimaux",
+    "subcategories": [
+      {
+        "label": "Addition",
+        "subsubcategories": [
+          {
+            "label": "Résultat"
+          },
+          {
+            "label": "A trou"
+          }
+        ]
+      },
+      {
+        "label": "Soustraction",
+        "subsubcategories": [
+          {
+            "label": "Résultat"
+          },
+          {
+            "label": "A trou"
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "label": "Relatifs",
+    "subcategories": [
+      {
+        "label": "Addition",
+        "subsubcategories": [
+          {
+            "label": "Résultat"
+          },
+          {
+            "label": "A trou"
+          }
+        ]
+      },
+      {
+        "label": "Soustraction",
+        "subsubcategories": [
+          {
+            "label": "Résultat"
+          },
+          {
+            "label": "A trou"
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "label": "Fractions",
+    "subcategories": [
+      {
+        "label": "Fractions égales",
+        "subsubcategories": [
+          {
+            "label": "Trouver"
+          },
+          {
+            "label": "A trou"
+          }
+        ]
+      },
+      {
+        "label": "Forme décimale",
+        "subsubcategories": [
+          {
+            "label": "Mettre sous forme décimale"
+          },
+          {
+            "label": "Mettre sous forme fractionnaire"
+          }
+        ]
+      }
+    ]
+  }
+
+
+]
