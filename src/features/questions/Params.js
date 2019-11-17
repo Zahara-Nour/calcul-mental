@@ -7,15 +7,10 @@ import {
   Input,
 } from 'react-bulma-components/lib/components/form'
 import Button from 'react-bulma-components/lib/components/button'
-import {
-  selectAssessment,
-  fetchQuestions,
-  setLevel,
-  prepareQuestions,
-} from '../questions/assessmentSlice'
-import Loader from 'react-bulma-components/lib/components/loader'
+import { setLevel, addToBasket } from '../questions/assessmentSlice'
 import Content from 'react-bulma-components/lib/components/content'
 import questions from '../../assets/questions'
+import { math } from 'tinycas/build/math/math'
 
 function mapStateToProps(state) {
   return {
@@ -38,42 +33,27 @@ function Params({ category, subcategory, subsubcategory, level, dispatch }) {
       question.subsubcategory === subsubcategory,
   )[0]
 
+  const { levels, ...rest } = question ? question : {}
+
   // dispatch(prepareQuestions())
 
   let i = 0
 
   return question ? (
-
     <>
       <Field>
-        <Label>Nombre de questions</Label>
-        <Control>
-          <Input
-            onChange={evt => setNbQuestions(evt.target.value)}
-            name="number"
-            type="number"
-            placeholder="10"
-            value={nbQuestions}
+      <Content>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: question.levels[levelId].description+"<br><strong>Exemple:</strong> "+math(question.levels[levelId].text).generate().string,
+            }}
           />
-        </Control>
+        </Content>
       </Field>
 
       <Field>
-        <Label>Delai</Label>
-        <Control>
-          <Input
-            onChange={evt => setDelay(evt.target.value)}
-            name="delay"
-            type="number"
-            placeholder="0"
-            value={delay}
-          />
-        </Control>
-      </Field>
-
-      <>
         <Label>Niveau</Label>
-        <Field kind="group">
+        <Button.Group>
           {question.levels.map(level => {
             const id = i++
             return (
@@ -90,36 +70,60 @@ function Params({ category, subcategory, subsubcategory, level, dispatch }) {
               </Control>
             )
           })}
-        </Field>
-        <Content>
-          <div
-            dangerouslySetInnerHTML={{ __html: question.levels[levelId].description }}
+        </Button.Group>
+      </Field>
+      
+      <Field>
+        <Label>Délai</Label>
+        <Control>
+          <Input
+            onChange={evt => setDelay(evt.target.value)}
+            name="delay"
+            type="number"
+            placeholder="0"
+            value={delay}
           />
-        </Content>
-      </>
+        </Control>
+      </Field>
+
+      
 
       <Field>
+        <Label>Nombre d'utilisation</Label>
         <Control>
-          <Button
-            color="primary"
-            onClick={function() {
+          <Input
+            onChange={evt => setNbQuestions(evt.target.value)}
+            name="number"
+            type="number"
+            placeholder="10"
+            value={nbQuestions}
+          />
+        </Control>
+        </Field>  
+      <Field >
+        <Button
+          color="primary"
+          onClick={() => {
+            for (let i = 0; i < nbQuestions; i++) {
               dispatch(
-                selectAssessment({
-                  monoAssessment: 1,
-                  defaultDelay: parseInt(delay, 10),
-                  nbQuestions: parseInt(nbQuestions, 10),
+                addToBasket({
+                  question: {
+                    ...levels[levelId],
+                    ...rest,
+                    delay: parseInt(delay, 10) * 1000,
+                  },
                 }),
               )
-              dispatch(prepareQuestions())
-            }}
-          >
-            Go daddy !
-          </Button>
-        </Control>
+            }
+          }}
+        >
+          Ajouter
+        </Button>
+        
       </Field>
     </>
   ) : (
-    <div/>
+    <div />
   )
 }
 

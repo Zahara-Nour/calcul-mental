@@ -7,15 +7,14 @@ function mapStateToProps(state) {
   return {
     isFinished: state.assessment.finished,
     questions: state.assessment.generatedQuestions,
-    defaultDelay: state.assessment.defaultDelay,
   }
 }
 
-function Assessment({ isFinished, questions, defaultDelay, dispatch }) {
+function Assessment({ isFinished, questions }) {
   return isFinished ? (
     <Correction questions={questions} />
   ) : (
-    <Questions questions={questions} defaultDelay={defaultDelay} />
+    <Questions questions={questions} />
   )
 }
 

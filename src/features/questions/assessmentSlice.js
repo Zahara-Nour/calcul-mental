@@ -4,36 +4,23 @@ import { math } from 'tinycas/build/math/math'
 
 function preparedQuestions(state) {
   const questions = state.questions
-  if (state.monoAssessment) {
-    
-    for (let i = 0; i < state.nbQuestions - 1; i++) {
-      questions.push(state.questions[0])
-    }
-  }
+  
   return questions.map(question => {
-    const { levels, ...rest } = question
-    const a = levels[0].text
-    const e = math(a)
-    const f = e.generate().string
+    const { text, ...rest } = question
     return {
-      text: math(levels[state.level-1].text).generate().string,
-      ...rest,
-    }
-  })
+      text: math(text).generate().string,
+      ...rest
+    }})
+  
 }
 const initialState = {
   questions: [],
   generatedQuestions: [],
-  nbQuestions: 10,
-  defaultDelay: 3000,
   fetchError: false,
   fetching: false,
   fetched: false,
   isReady: false,
-  isSelected: false,
   finished: false,
-  monoAssessment: 1,
-  mixedAssessment: 1,
   categories: [],
   category: null,
   subcategory: null,
@@ -60,6 +47,7 @@ const assessmentSlice = createSlice({
     
     prepareQuestions(state) {
       state.generatedQuestions = preparedQuestions(state)
+      state.isReady = true
     },
    
     assessmentFinished(state) {
@@ -72,6 +60,14 @@ const assessmentSlice = createSlice({
       state.mixedAssessment = action.payload.assessmentId
       state.isSelected = true
     },
+
+    addToBasket(state, action) {
+      state.questions.push(action.payload.question)
+    },
+
+    removeFromBasket(state, action) {
+      state.questions.splice(action.payload.id,1)
+    }
   },
 })
 
@@ -80,7 +76,9 @@ export const {
   selectAssessment,
   setCategory,
   setLevel,
-  prepareQuestions
+  prepareQuestions,
+  addToBasket,
+  removeFromBasket
 } = assessmentSlice.actions
 
 export default assessmentSlice.reducer

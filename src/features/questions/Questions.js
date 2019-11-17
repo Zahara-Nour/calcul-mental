@@ -8,11 +8,11 @@ import Container from 'react-bulma-components/lib/components/container'
 import Section from 'react-bulma-components/lib/components/section'
 import QuestionNumber from './QuestionNumber'
 
-function Questions({ questions, defaultDelay, dispatch }) {
+function Questions({ questions, dispatch }) {
   const [current, setCurrent] = useState(1)
   const [start, setStart] = useState(Date.now())
   const [elapsed, setElapsed] = useState(0)
-  const delay = defaultDelay ? defaultDelay * 1000: questions[current - 1].delay*1000
+  const delay = questions[current - 1].delay
   
 
   function changeQuestion() {
