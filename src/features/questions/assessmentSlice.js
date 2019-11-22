@@ -26,7 +26,11 @@ const initialState = {
   subcategory: null,
   subsubcategory: null,
   level:1,
-  levels:[]
+  levels:[],
+  savingBasket: false,
+  savingBasketSuccess: false,
+  savingBasketError: false
+
 }
 
 const assessmentSlice = createSlice({
@@ -67,6 +71,23 @@ const assessmentSlice = createSlice({
 
     removeFromBasket(state, action) {
       state.questions.splice(action.payload.id,1)
+    },
+
+    saveBasketRequest(state) {
+      state.savingBasket=true
+      state.savingBasketSuccess=false
+      state.savingBasketError=false
+
+    },
+    saveBasketFailure(state, action) {
+      state.savingBasket=false
+      state.savingBasketError= action.payload.error
+
+
+    },
+    saveBasketSuccess(state, action) {
+      state.savingBasket = false
+      state.savingBasketSuccess = true
     }
   },
 })
@@ -78,7 +99,29 @@ export const {
   setLevel,
   prepareQuestions,
   addToBasket,
-  removeFromBasket
+  removeFromBasket,
+  saveBasketFailure,
+  saveBasketRequest,
+  saveBasketSuccess
 } = assessmentSlice.actions
+
+
+function saveBasketThunk({assessment,id}){
+
+  return function (dispatch) {
+    dispatch(saveBasketRequest())
+    db.collection("assessments").doc(id).set({assessment})
+  .then(function() {
+    dispatch(saveBasketSuccess())
+      console.log("Document successfully written!");
+  })
+  .catch(function(error) {
+    dispatch(saveBasketFailure({error}))
+      console.error("Error writing document: ", error);
+  });
+  }
+}
+
+export {saveBasketThunk}
 
 export default assessmentSlice.reducer
