@@ -45,7 +45,7 @@ function Params({ category, subcategory, subsubcategory, level, dispatch }) {
       <Content>
           <div
             dangerouslySetInnerHTML={{
-              __html: question.levels[levelId].description+"<br><strong>Exemple:</strong> "+math(question.levels[levelId].text).generate().string,
+              __html: question.levels[levelId].description+"<br><strong>Exemple:</strong> "+math(question.levels[levelId].text[0]).generate().string,
             }}
           />
         </Content>

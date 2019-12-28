@@ -4,14 +4,24 @@ import { math } from 'tinycas/build/math/math'
 
 function preparedQuestions(state) {
   const questions = state.questions
-  
+
+  const generated = []
   return questions.map(question => {
     const { text, ...rest } = question
+
+    let generatedText
+    do {
+      generatedText = math(
+        text[Math.floor(Math.random() * text.length)],
+      ).generate().string
+    } while (generated.includes(generatedText))
+    generated.push(generatedText)
+
     return {
-      text: math(text).generate().string,
-      ...rest
-    }})
-  
+      text: generatedText,
+      ...rest,
+    }
+  })
 }
 const initialState = {
   questions: [],
@@ -25,19 +35,17 @@ const initialState = {
   category: null,
   subcategory: null,
   subsubcategory: null,
-  level:1,
-  levels:[],
+  level: 1,
+  levels: [],
   savingBasket: false,
   savingBasketSuccess: false,
-  savingBasketError: false
-
+  savingBasketError: false,
 }
 
 const assessmentSlice = createSlice({
   name: 'assessment',
   initialState: initialState,
   reducers: {
-    
     setCategory(state, action) {
       state.category = action.payload.category
       state.subcategory = action.payload.subcategory
@@ -45,15 +53,15 @@ const assessmentSlice = createSlice({
       state.fetched = false
     },
 
-    setLevel(state,action) {
+    setLevel(state, action) {
       state.level = action.payload.level
     },
-    
+
     prepareQuestions(state) {
       state.generatedQuestions = preparedQuestions(state)
       state.isReady = true
     },
-   
+
     assessmentFinished(state) {
       state.finished = true
     },
@@ -70,25 +78,22 @@ const assessmentSlice = createSlice({
     },
 
     removeFromBasket(state, action) {
-      state.questions.splice(action.payload.id,1)
+      state.questions.splice(action.payload.id, 1)
     },
 
     saveBasketRequest(state) {
-      state.savingBasket=true
-      state.savingBasketSuccess=false
-      state.savingBasketError=false
-
+      state.savingBasket = true
+      state.savingBasketSuccess = false
+      state.savingBasketError = false
     },
     saveBasketFailure(state, action) {
-      state.savingBasket=false
-      state.savingBasketError= action.payload.error
-
-
+      state.savingBasket = false
+      state.savingBasketError = action.payload.error
     },
     saveBasketSuccess(state, action) {
       state.savingBasket = false
       state.savingBasketSuccess = true
-    }
+    },
   },
 })
 
@@ -102,26 +107,26 @@ export const {
   removeFromBasket,
   saveBasketFailure,
   saveBasketRequest,
-  saveBasketSuccess
+  saveBasketSuccess,
 } = assessmentSlice.actions
 
-
-function saveBasketThunk({assessment,id}){
-
-  return function (dispatch) {
+function saveBasketThunk({ assessment, id }) {
+  return function(dispatch) {
     dispatch(saveBasketRequest())
-    db.collection("assessments").doc(id).set({assessment})
-  .then(function() {
-    dispatch(saveBasketSuccess())
-      console.log("Document successfully written!");
-  })
-  .catch(function(error) {
-    dispatch(saveBasketFailure({error}))
-      console.error("Error writing document: ", error);
-  });
+    db.collection('assessments')
+      .doc(id)
+      .set({ assessment })
+      .then(function() {
+        dispatch(saveBasketSuccess())
+        console.log('Document successfully written!')
+      })
+      .catch(function(error) {
+        dispatch(saveBasketFailure({ error }))
+        console.error('Error writing document: ', error)
+      })
   }
 }
 
-export {saveBasketThunk}
+export { saveBasketThunk }
 
 export default assessmentSlice.reducer

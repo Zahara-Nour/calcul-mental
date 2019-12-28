@@ -10,6 +10,12 @@
           },
           {
             "label": "A trou"
+          },
+          {
+            "label": "Compléments"
+          },
+          {
+            "label": "Mariages"
           }
         ]
       },
@@ -21,6 +27,58 @@
           },
           {
             "label": "A trou"
+          }
+        ]
+      },
+      {
+        "label": "Multiplication",
+        "subsubcategories": [
+          {
+            "label": "Résultat"
+          },
+          {
+            "label": "A trou"
+          },
+          {
+            "label": "Mariages"
+          },
+          {
+            "label": "Décomposition"
+          },
+          {
+            "label": "Carrés"
+          },
+          {
+            "label": "par 25"
+          },
+          {
+            "label": "par 60"
+          }
+        ]
+      },
+      {
+        "label": "Division",
+        "subsubcategories": [
+          {
+            "label": "Résultat"
+          },
+          {
+            "label": "A trou"
+          },
+          {
+            "label": "Euclidienne"
+          },
+          {
+            "label": "Divisibilité"
+          },
+          {
+            "label": "Diviseurs"
+          },
+          {
+            "label": "par 25"
+          },
+          {
+            "label": "par 60"
           }
         ]
       }
